@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	<!-- 配置class类由spring代理 -->
+	<package name="default" extends="struts-default">
+		<!-- 配置页面访问访问请求的跳转和返回结果的路径 -->
+		<!-- <action name="login" class="loginAction" method="login">
+			<result name="login">login.jsp</result>
+			<result name="ok">loginOk.jsp</result>
+			<result name="error">loginError.jsp</result>
+		</action> -->
+		<action name="sjzdfl" class="sjzdflAction">
+			<result name="success">/form/ShowSjzdfl.jsp</result>
+		</action>
+		<action name="updatesjzdfl" class="updateSjzdflAction">
+			<result name="success" type="chain">sjzdfl</result>
+		</action>
+		<action name="getsjzdxx" class="getSjzdxxAction">
+			<result name="success">/form/ShowSjzdxx.jsp</result>
+		</action>
+		<action name="updatesjzdxx" class="updateSjzdxxAction">
+			<result name="success" type="chain">getsjzdxx</result>
+		</action>
+		
+		<action name="getcustlevelinfo" class="getcustlevelinfoAction">
+			<result name="success">/form/ShowCustLevelInfo.jsp</result>
+		</action>
+		
+		<action name="updatecustlevelinfo" class="updatecustlevelinfoAction">
+			<result name="success" type="chain">getcustlevelinfo</result>
+		</action>
+		
+		<action name="custinfogetallsjzdxx" class="custinfogetallsjzdxxAction">
+			<!-- <result name="success">/form/AddCustInfo.jsp</result> -->
+			<result name="success">/form/AddCustInfoAjax.jsp</result>
+		</action>
+		
+		<action name="custinfoadd" class="custinfoaddAction">
+			<result name="success" type="chain">custinfogetallsjzdxx</result>
+		</action>
+		
+		<action name="custinfoFindAll" class="custinfoFindAllAction">
+			<result name="success">/form/ShowCustInfo.jsp</result>
+		</action>
+		<action name="custinfoFindDetail" class="custinfoFindDetailAction">
+			<result name="success">/form/ShowCustInfoDetail.jsp</result>
+		</action>
+		<action name="custinfoUpdateBefore" class="custinfoUpdateBeforeAction">
+			<result name="success">/form/UpdateCustInfoAjax.jsp</result>
+		</action>
+		<action name="custinfoQuery" class="custinfoQueryAction">
+			<result name="success">/form/ShowCustInfo.jsp</result>
+		</action>
+	</package>
+	<constant name="struts.action.excludePattern" value="/dwr.*"></constant>
+</struts>

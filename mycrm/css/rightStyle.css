@@ -1,0 +1,23 @@
+/* CSS Document */
+* { margin:0; padding:0; }
+body { font-family: Verdana, Geneva, sans-serif; font-size: 12px; line-height: 180%;  color:#000000; background-image: url(/images/bodybg.gif); background-repeat: repeat-x; background-position: 0px 0px; }
+
+a:link {  text-decoration: none; font-family: Verdana, Geneva, sans-serif; font-size: 12px; line-height: 180%; }
+a:hover {   font-family: Verdana, Geneva, sans-serif;   font-size: 12px;   line-height: 180%;  text-decoration: none; }
+a:visited { font-family: Verdana, Geneva, sans-serif;   font-size: 12px;   line-height: 180%;  text-decoration: none; }
+a:active {  font-family: Verdana, Geneva, sans-serif;   font-size: 12px;   line-height: 180%;  text-decoration: none; }
+img{border:none; vertical-align:middle;}
+h1{font-size: 36px; line-height:normal;}
+h2{font-size: 24px; line-height:normal;}
+h3{font-size: 18px; line-height:normal;}
+h4{font-size: 16px; line-height:normal;}
+h5{font-size: 14px; line-height:normal;}
+h6{font-size: 12px; line-height:normal;}
+li{ list-style-type:none;}
+img{ border:none;}
+p{line-height:200%;}
+.clear { clear: both; }
+.left { float:left;}
+.right{ float:right;}
+form,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,p {margin: 0;padding: 0;list-style: none;}
+

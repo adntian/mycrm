@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+	<allow>
+
+		<create creator="new" javascript="JDate">
+			<param name="class" value="java.util.Date" />
+		</create>
+
+		<create creator="spring" javascript="custajax">
+			<param name="beanName" value="custajax" />
+			<include method="saveCust"/>
+			<include method="updateCustInfo"/>
+			<include method="deleteCust"/>
+			<include method="deleteCusts"/>
+		</create>
+
+		<!-- <create creator="new" javascript="TestDWR"> <param name="class" value="com.crm.dwr.TestDWR1" 
+			/> </create> <create creator="new" javascript="TestDWR2"> <param name="class" 
+			value="com.crm.dwr.TestDWR2" /> </create> <create creator="new" javascript="TestDWR3"> 
+			<param name="class" value="com.crm.dwr.TestDWR3" /> </create> -->
+
+		<create creator="spring" javascript="SjzdflDAO">
+			<param name="beanName" value="sjzdflService" />
+		</create>
+
+		<convert converter="bean" match="com.crm.entity.Sjzdfl">
+			<param name="include" value="sjzdflId,sjzdflmc,state" />
+		</convert>
+
+
+	</allow>
+</dwr>

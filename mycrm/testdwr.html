@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>TestDate</title>
+<script type="text/javascript" src='dwr/engine.js'></script>
+<script type="text/javascript" src='dwr/interface/JDate.js'></script>
+<script type="text/javascript">
+	function init(){
+		JDate.getYear(aaa);
+		JDate.getMonth(bbb);
+	}
+	
+	function aaa(date){
+		alert(date+1900+"年");
+	}
+	
+	function bbb(date){
+		alert(date +1+ "月");
+	}
+</script>
+</head>
+<body onload="JavaScript:init();">
+
+</body>
+</html>

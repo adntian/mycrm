@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 把db.xml配置文件导入，实现spring和hibernate的整合，同时这里配置dao和service的参数注入 -->
+	<!-- 数据库配置 -->
+	<import resource="/db.xml" />
+	
+	<!-- 用户dao -->
+	<!-- <bean id="userDAO" class="com.crm.dao.UserDAOImpl" parent="daoTemplate" 
+		/> -->
+	<!-- 登录服务[进行事务控制] -->
+	<!-- <bean id="userService" parent="baseTransactionProxy"> <property name="target"> 
+		<bean class="com.crm.ser.UserServiceImpl"> <property name="userDAO" ref="userDAO" 
+		/> </bean> </property> </bean> -->
+	<!-- 配置action的代理 -->
+	<!-- 登陆Action -->
+	<!-- <bean id="loginAction" class="com.crm.web.LoginAction" singleton="false"> 
+		<property name="userService" ref="userService" /> </bean> -->
+	<!-- 数据库字典分类DAO -->
+	<bean id="sjzdflDAO" class="com.crm.dao.SjzdflDAOImpl" parent="daoTemplate" />
+	<bean id="sjzdflService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.crm.service.SjzdflServiceImpl">
+				<property name="sjzdflDAO" ref="sjzdflDAO" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sjzdflAction" class="com.crm.web.SjzdflAction"
+		singleton="false">
+		<property name="sjzdflService" ref="sjzdflService" />
+	</bean>
+	<bean id="updateSjzdflAction" class="com.crm.web.UpdateSjzdflAction"
+		singleton="false">
+		<property name="sjzdflService" ref="sjzdflService" />
+		<property name="sjzdxxService" ref="sjzdxxService" />
+	</bean>
+	<bean id="getSjzdxxAction" class="com.crm.web.GetSjzdxxAction"
+		singleton="false">
+		<property name="sjzdflService" ref="sjzdflService" />
+		<property name="sjzdxxService" ref="sjzdxxService" />
+	</bean>
+	<bean id="updateSjzdxxAction" class="com.crm.web.UpdateSjzdxxAction"
+		singleton="false">
+		<property name="sjzdxxService" ref="sjzdxxService" />
+		<property name="sjzdflService" ref="sjzdflService" />
+	</bean>
+
+	<!-- 数据库字典信息DAO -->
+	<bean id="sjzdxxDAO" class="com.crm.dao.SjzdxxDAOImpl" parent="daoTemplate" />
+	<bean id="sjzdxxService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.crm.service.SjzdxxServiceImpl">
+				<property name="sjzdxxDAO" ref="sjzdxxDAO" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sjzdxxAction" class="com.crm.web.SjzdxxAction"
+		singleton="false">
+		<property name="sjzdxxService" ref="sjzdxxService" />
+	</bean>
+	
+	<!-- 客户级别DAO -->
+	<bean id="custlevelinfoDAO" class="com.crm.dao.CustLevelInfoDAOImpl" parent="daoTemplate" />
+	<bean id="custlevelinfoService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.crm.service.CustLevelInfoServiceImpl">
+				<property name="custlevelinfoDAO" ref="custlevelinfoDAO" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="getcustlevelinfoAction" class="com.crm.web.GetCustLevelInfoAction"
+		singleton="false">
+		<property name="custlevelinfoService" ref="custlevelinfoService" />
+	</bean>
+	<bean id="updatecustlevelinfoAction" class="com.crm.web.UpdateCustLevelInfoAction"
+		singleton="false">
+		<property name="custlevelinfoService" ref="custlevelinfoService" />
+	</bean>
+	
+	<!-- 客户信息DAO -->
+	<bean id="custinfoDAO" class="com.crm.dao.CustInfoDAOImpl" parent="daoTemplate" />
+	<bean id="custinfoService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.crm.service.CustInfoServiceImpl">
+				<property name="custlevelinfoDAO" ref="custlevelinfoDAO" />
+				<property name="custinfoDAO" ref="custinfoDAO" />
+				<property name="sjzdxxDAO" ref="sjzdxxDAO" />
+				<property name="sjzdflDAO" ref="sjzdflDAO" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="custinfogetallsjzdxxAction" class="com.crm.web.CustInfoGetAllSjzdxxAction"
+		singleton="false">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+	<bean id="custinfoaddAction" class="com.crm.web.CustInfoAddAction"
+		singleton="false">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+	<bean id="custajax" class="com.crm.dwr.CustAjax">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+	
+	<bean id="custinfoFindAllAction" class="com.crm.web.CustInfoFindAllAction">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+	
+	<bean id="custinfoFindDetailAction" class="com.crm.web.CustInfoFindDetailAction">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+	<bean id="custinfoUpdateBeforeAction" class="com.crm.web.CustInfoUpdateBeforeAction">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+	<bean id="custinfoQueryAction" class="com.crm.web.CustInfoQueryAction">
+		<property name="custinfoService" ref="custinfoService" />
+	</bean>
+</beans>

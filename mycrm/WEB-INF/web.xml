@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name></display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- Struts容器控制器 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Spring容器配置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/spring.xml</param-value>
+	</context-param>
+
+	<!-- Spring容器监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/log4j.properties</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>dwr</servlet-name>
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>WARN</param-value>
+		</init-param>
+		<init-param>
+			<param-name>crossDomainSessionSecurity</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- 这个属性是用来提供察看连接池信息的工具，既在域名后跟上/datasource_situation就可以查看了，当然名字可以自己定义 -->
+	<servlet>
+		<servlet-name>datasource_situation</servlet-name>
+		<servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>datasource_situation</servlet-name>
+		<url-pattern>/datasource_situation</url-pattern>
+	</servlet-mapping>
+	<!-- 配置受保护域，只有Tomcat管理员才能察看连接池的信息 -->
+	<!-- 限制用户和密码来访问 -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>proxool</web-resource-name>
+			<url-pattern>/datasource_situation</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>manager</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>proxool manager Application</realm-name>
+	</login-config>
+	<security-role>
+		<description>  
+            The role that is required to log in to the Manager  
+            Application  
+        </description>
+		<role-name>manager</role-name>
+	</security-role>
+	<!-- 如果连续三次登陆失败，进入401.jsp页面。401.jsp要加入下段代码 response.setHeader("WWW-Authenticate", 
+		"Basic realm=\"Tomcat Manager Application\""); -->
+	<error-page>
+		<error-code>401</error-code>
+		<location>/401.jsp</location>
+	</error-page>
+</web-app>

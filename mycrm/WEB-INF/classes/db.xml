@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 用于配置与数据库相关的信息，是Hibernate的主要配置文件，配置完成之后关联到spring即可 -->
+	<!-- 引入配置文件 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置数据库 -->
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver" value="${jdbc.driverClassName}" />
+		<property name="driverUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maximumConnectionCount" value="${proxool.maxConnCount}" />
+		<property name="minimumConnectionCount" value="${proxool.minConnCount}" />
+		<property name="statistics" value="${proxool.statistics}" />
+		<property name="simultaneousBuildThrottle" value="${proxool.simultaneousBuildThrottle}" />
+		<property name="trace" value="${proxool.trace}" />
+		<property name="verbose" value="${proxool.verbose}" />
+		<property name="connection.useUnicode" value="true" />
+		<property name="connection.characterEncoding" value="UTF8" />
+	</bean>
+
+	<!-- 会话配置 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<!-- 项目应用实体对象 -->
+				<!-- <value>com/crm/entity/User.hbm.xml</value> -->
+				<value>com/crm/entity/Sjzdfl.hbm.xml</value>
+				<value>com/crm/entity/Sjzdxx.hbm.xml</value>
+				<value>com/crm/entity/CustLevelInfo.hbm.xml</value>
+				<value>com/crm/entity/CustInfo.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 事务管理配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 业务类声明式事务管理配模板,需要使用事务管理业务服务对象,直接继承此Bean[即配置parent属性为此bean的id],方便统一配置 -->
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<!-- 指明进行事务管理业务方法名[*是通配符] -->
+				<!-- 定义事务传播特性 PROPAGATION_REQUIRED:支持当前事务,如果当前没有事务,就新建一个事务,这是最常见的选择; 
+					PROPAGATION_SUPPORTS:支持当前事务,如果当前没有事务,就以非事务执行. PROPAGATION_MANDATORY :支持当前事务,如果当前没有事务,就抛出异常. 
+					PROPAGATION_REQUIRES_NEW:新建事务,如果当前存在事务,就把当前事务挂起. PROPAGATION_NOT_SUPPORTED:以非事务方式执行,如果当前存在事务,就把当前事务挂起. 
+					PROPAGATION_NEVER: 以非事务方式执行,如果当前存在事务,,就抛出异常. PROPAGATION_NESTED:如果当前存在事务,则在嵌套事务内执行， 
+					如果当前没有事务，则进行与PROPAGATION_REQUIRED类似的操作， 其中第七个是spring提供的一个特殊变量 -->
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="edit*">PROPAGATION_REQUIRED</prop>
+				<prop key="del*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Dao模板,具体实现Dao继承此bean的配置,省去各个Dao的重复配置 -->
+	<bean id="daoTemplate" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>

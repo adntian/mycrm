@@ -1,0 +1,19 @@
+body{font-family: "ËÎÌו", Arial, Helvetica, sans-serif; padding:0 8px 0 10px;  margin:auto; font-size:12px; background:#fff; color:#414141}
+a.close:link    {color:  #000000;text-decoration:none;}
+a.close:visited {color:  #000000;text-decoration:none;}
+a.close:active  {color:  #000000;text-decoration:none;}
+a.close:hover   {color:  #000000;text-decoration:none;}
+.inputFrm {border-right: #d2d2d2 1px solid; border-top:#d2d2d2 1px solid; font-size:12px;   border-left: #d2d2d2 1px solid; width:100%;  border-bottom:#d2d2d2 1px solid;}
+.selectFrm{border-top-width: 1px; border-left-width:1px; font-size:12px; border-bottom-width: 1px; width: 80%;border-right-width: 1px; color: #FFFFFF}
+.PageBody {FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#B2DBFE,endColorStr=#FFFFFF); BACKGROUND-COLOR:white; }
+.UpTr     {background: #ebebeb}
+.DownTr   {background: #ffffff}
+.LoginLine{background: #e4e4e4}
+.ItemTitleFont {font-size:9px; color:#8d3131; font-family:ËÎÌו}
+.loginyzm      {border-right: #d2d2d2 1px solid; border-top:#d2d2d2 1px solid; font-size:12px;border-left: #d2d2d2 1px solid; width:40px; border-bottom:#d2d2d2 1px solid;float:left; }
+.VersionTitle  {PADDING-RIGHT: 8px; font-size:12px; COLOR: #000000; FONT-FAMILY: ËÎÌו}
+.yzm_img{float:right; width:50px; height:25px;}
+img{border:0}
+#nosee{  float:right; width:50px; height:25px;}
+
+.text_leftMsg{font-size:9px; }
